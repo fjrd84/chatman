@@ -1,12 +1,12 @@
-var env = require('node-env-file');
+const env = require('node-env-file');
 env(__dirname + '/.env');
 
-var Botkit = require('botkit');
-var debug = require('debug')('botkit:main');
+const Botkit = require('botkit');
+const debug = require('debug')('botkit:main');
 
 const FORTUNE_COOKIES = require('./components/fortune_cookies');
 
-var bot_options = {
+const bot_options = {
     replyWithTyping: true,
 };
 
@@ -14,17 +14,17 @@ var bot_options = {
 // Mongo is automatically configured when deploying to Heroku
 if (process.env.MONGO_URI) {
     // create a custom db access method
-    var db = require(__dirname + '/components/database.js')({});
+    const db = require(__dirname + '/components/database.js')({});
     bot_options.storage = db;
 } else {
     bot_options.json_file_store = __dirname + '/.data/db/'; // store user data in a simple JSON format
 }
 
 // Create the Botkit controller, which controls all instances of the bot.
-var controller = Botkit.socketbot(bot_options);
+const controller = Botkit.socketbot(bot_options);
 
 // Set up an Express-powered webserver to expose oauth and webhook endpoints
-var webserver = require(__dirname + '/components/express_webserver.js')(controller);
+const webserver = require(__dirname + '/components/express_webserver.js')(controller);
 
 // Load in a plugin that defines the bot's identity
 require(__dirname + '/components/plugin_identity.js')(controller);
@@ -35,7 +35,7 @@ controller.openSocketServer(controller.httpserver);
 // Start the bot brain in motion!!
 controller.startTicking();
 
-var normalizedPath = require("path").join(__dirname, "skills");
+const normalizedPath = require("path").join(__dirname, "skills");
 require("fs").readdirSync(normalizedPath).forEach(function (file) {
     if (file === 'unused') { return; }
     require("./skills/" + file)(controller);
@@ -43,15 +43,17 @@ require("fs").readdirSync(normalizedPath).forEach(function (file) {
 
 console.log('I AM ONLINE! COME TALK TO ME: http://localhost:' + (process.env.PORT || 3000));
 
-controller.on('message_received', function (bot, message) {
-    let answer = FORTUNE_COOKIES[
+controller.on('message_received', (bot, message) => {
+
+    let text = FORTUNE_COOKIES[
         Math.round(
             Math.random() * (FORTUNE_COOKIES.length - 1)
         )
     ];
+
     bot.reply(message,
         {
-            text: answer,
+            text,
             typingDelay: 500,
         }
     );
