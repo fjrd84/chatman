@@ -2,20 +2,24 @@
 
 Minimal example of botkit for the web. All connections to botkit studio have been removed and it can work completely offline.
 
-Embed a bot in any web page or app with Botkit for the Web.
-
-Botkit Anywhere is a self-contained chat server, API and web-based messaging client that has been built on top of the industry leading Botkit development stack.
-
 ## How Chatman came to be
 
-- `botkit` was installed globally, and then wizard was executed: 
+- `botkit` was installed globally, and then generator wizard was executed: 
 
 ```bash
 npm install -g botkit
 botkit new
 ```
 
-- All connections to Botkit Studio were removed and a random fortune cookie response was added.
+After that, all connections to Botkit Studio were removed and a random fortune cookie response was added.
+
+## Run this thing
+
+- [Install yarn globally.](https://yarnpkg.com/lang/en/docs/install/).
+- ´yarn´ install the dependencies.
+- ´yarn start´ run chatman locally.
+
+If everything went fine, a test frontend app will be available at `http://localhost:3000`.
 
 ## Chat Server and API
 
@@ -35,7 +39,3 @@ and account-linking features that enable you to identify existing users to your 
 # Developer & Support Community
 
 You can find full documentation for Botkit on our [GitHub page](https://github.com/howdyai/botkit/blob/master/readme.md). Botkit Studio users can access the [Botkit Studio Knowledge Base](https://botkit.groovehq.com/help_center) for help in managing their account.
-
-# About Botkit
-
-Botkit is a product of [Howdy](https://howdy.ai) and made in Austin, TX with the help of a worldwide community of botheads.
