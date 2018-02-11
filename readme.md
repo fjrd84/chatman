@@ -1,4 +1,4 @@
-# Chatman: a botkit experiment
+# Chatman: a fortune cookie botkit experiment
 
 Minimal example of botkit for the web. All connections to botkit studio have been removed and it can work completely offline.
 
