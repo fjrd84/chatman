@@ -7,7 +7,7 @@ var fs = require('fs');
 var hbs = require('express-hbs');
 
 
-module.exports = function(controller) {
+module.exports = function (controller) {
 
 
     var webserver = express();
@@ -15,14 +15,15 @@ module.exports = function(controller) {
     webserver.use(bodyParser.urlencoded({ extended: true }));
 
     // set up handlebars ready for tabs
-    webserver.engine('hbs', hbs.express4({partialsDir: __dirname + '/../views/partials'}));
+    webserver.engine('hbs', hbs.express4({ partialsDir: __dirname + '/../views/partials' }));
     webserver.set('view engine', 'hbs');
     webserver.set('views', __dirname + '/../views/');
 
     // import express middlewares that are present in /components/express_middleware
     var normalizedPathToMiddleware = require('path').join(__dirname, 'express_middleware');
     if (fs.existsSync(normalizedPathToMiddleware)) {
-        fs.readdirSync(normalizedPathToMiddleware).forEach(function(file) {
+        fs.readdirSync(normalizedPathToMiddleware).forEach(function (file) {
+            if (file === 'unused') { return; }
             require('./express_middleware/' + file)(webserver, controller);
         });
     }
@@ -31,7 +32,7 @@ module.exports = function(controller) {
 
     var server = http.createServer(webserver);
 
-    server.listen(process.env.PORT || 3000, null, function() {
+    server.listen(process.env.PORT || 3000, null, function () {
 
         debug('Express webserver configured and listening at http://localhost:' + process.env.PORT || 3000);
 
